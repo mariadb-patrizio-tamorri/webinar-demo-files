@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+  
+  maxscale:
+    image: mariadb/maxscale:23.02
+    hostname: maxscale1
+    volumes:
+      - ./maxscale/max1.txt:/etc/maxscale.cnf
+    ports:
+      - 3307:4006
+      - 8989:8989
+    depends_on:
+      - mariadb1
+      - mariadb2
+      - mariadb3    
+      
+  maxscale2:
+    image: mariadb/maxscale:23.02
+    hostname: maxscale2
+    volumes:
+      - ./maxscale/max1.txt:/etc/maxscale.cnf
+    ports:
+      - 3308:4006
+      - 8990:8989
+    depends_on:
+      - mariadb1
+      - mariadb2
+      - mariadb3 
+
+  mariadb1:
+    image: mariadb:10.6
+    hostname: mariadb1
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: mydatabase
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+    volumes:
+      - ./mariadb/mariadb1.txt:/etc/mysql/conf.d/custom.cnf:ro
+      - ./mariadb/init1.sql:/docker-entrypoint-initdb.d/init.sql
+          
+      
+  mariadb2:
+    image: mariadb:10.6
+    hostname: mariadb2
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: mydatabase
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+    volumes:
+      - ./mariadb/mariadb2.txt:/etc/mysql/conf.d/custom.cnf:ro
+      - ./mariadb/init2.sql:/docker-entrypoint-initdb.d/init.sql
+          
+      
+  mariadb3:
+    image: mariadb:10.6
+    hostname: mariadb3
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: mydatabase
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+    volumes:
+      - ./mariadb/mariadb3.txt:/etc/mysql/conf.d/custom.cnf:ro
+      - ./mariadb/init3.sql:/docker-entrypoint-initdb.d/init.sql
+          
+
+      
+      

@@ -10,10 +10,6 @@ services:
     ports:
       - 3307:4006
       - 8989:8989
-    depends_on:
-      - mariadb1
-      - mariadb2
-      - mariadb3    
       
   maxscale2:
     image: mariadb/maxscale:23.02
@@ -23,14 +19,10 @@ services:
     ports:
       - 3308:4006
       - 8990:8989
-    depends_on:
-      - mariadb1
-      - mariadb2
-      - mariadb3 
 
-  mariadb1:
+
+  mariadb_node_one:
     image: mariadb:10.6
-    hostname: mariadb1
     environment:
       MARIADB_ROOT_PASSWORD: password
       MARIADB_DATABASE: mydatabase
@@ -41,9 +33,8 @@ services:
       - ./mariadb/init1.sql:/docker-entrypoint-initdb.d/init.sql
           
       
-  mariadb2:
+  mariadb_node_two:
     image: mariadb:10.6
-    hostname: mariadb2
     environment:
       MARIADB_ROOT_PASSWORD: password
       MARIADB_DATABASE: mydatabase
@@ -52,11 +43,9 @@ services:
     volumes:
       - ./mariadb/mariadb2.txt:/etc/mysql/conf.d/custom.cnf:ro
       - ./mariadb/init2.sql:/docker-entrypoint-initdb.d/init.sql
-          
       
-  mariadb3:
+  mariadb_node_three:
     image: mariadb:10.6
-    hostname: mariadb3
     environment:
       MARIADB_ROOT_PASSWORD: password
       MARIADB_DATABASE: mydatabase

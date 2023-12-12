@@ -12,20 +12,20 @@ passive=false
 
 [node1]
 type=server
-address=mariadb1
-port=3306
+address=mariadb_node_one
+port=3301
 protocol=MariaDBBackend
 
 [node2]
 type=server
-address=mariadb2
-port=3306
+address=mariadb_node_two
+port=3302
 protocol=MariaDBBackend
 
 [node3]
 type=server
-address=mariadb3
-port=3306
+address=mariadb_node_three
+port=3303
 protocol=MariaDBBackend
 
 
@@ -35,11 +35,12 @@ router=readwritesplit
 servers=node1,node2,node3
 user=root
 password=password
-transaction_replay                   = true
-transaction_replay_max_size          = 10Mi
-transaction_replay_attempts          = 1000
-transaction_replay_retry_on_deadlock = true
-
+transaction_replay=true
+transaction_replay_max_size=10Mi
+transaction_replay_attempts=10
+transaction_replay_retry_on_deadlock=true
+delayed_retry_timeout=60s
+delayed_retry=true
 
 
 [monitor1]
